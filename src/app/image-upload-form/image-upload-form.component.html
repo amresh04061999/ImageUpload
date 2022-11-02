@@ -1,1 +1,42 @@
-<p>image-upload-form works!</p>
+<div class="mx-3 justify-content-center">
+  <h1 class="text-center my-4">Image-upload-form</h1>
+  <div class="row d-flex justify-content-center align-items-center ">
+    <div class="col-md-6  col-lg-6  d-flex flex-column   ">
+      <form [formGroup]="images">
+        <!-- Browser file 1 -->
+        <div class="file">
+          <label class="form-label" for="number">Select First Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath1">
+          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
+          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+        </div>
+        <!-- Browser file 2 -->
+        <div class="file">
+          <label class="form-label" for="number">Select Second Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath2">
+          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
+          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+        </div>
+        <!-- Browser file 3 -->
+        <div class="file">
+          <label class="form-label" for="number">Select third Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath3">
+          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
+          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+        </div>
+        <!-- Browser file 4 -->
+        <div class="file">
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath4">
+          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
+          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+        </div>
+        <!-- Browser file 5 -->
+        <div class="file">
+          <label class="form-label" for="number">Select Five Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath5">
+          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
+          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+        </div>
+      </form>
+    </div>
+  </div>
