@@ -2,6 +2,14 @@
   <h1 class="text-center my-4">Image-upload-form</h1>
   <div class="row d-flex justify-content-center align-items-center ">
     <div class="col-md-6  col-lg-6  d-flex flex-column   ">
+      <div>
+        <input type="file" accept=".jpg,.png" class="button"  (change)="selectFile($event)" />
+        <p>Upload Percent: {{percentDone}}% </p> <br />
+        
+        <ng-container *ngIf="uploadSuccess" class="success">
+          <p class="sucess">Upload Successful</p>
+        </ng-container> 
+      </div>
       <form [formGroup]="images">
         <!-- Browser file 1 -->
         <div class="file">

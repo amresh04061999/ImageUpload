@@ -16,7 +16,7 @@ export class HttpService {
    * @param image
    * @returns
    */
-  addComapny(image: Image): Observable<Image> {
+  addimage(image: Image): Observable<Image> {
     const URL: string = `${this.baseUrl}images`;
     return this._http.post<Image>(URL, image);
   }
