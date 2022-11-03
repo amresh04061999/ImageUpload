@@ -6,16 +6,17 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImageUploadFormComponent } from './image-upload-form/image-upload-form.component';
 import { CoreModule } from './core/core.module';
-import { HttpService } from './Services/http.service';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { UploadFileService } from './Services/upload-file.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImageUploadFormComponent
+    ImageUploadFormComponent,
 
   ],
   imports: [
@@ -27,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
 
   ],
-  providers: [HttpService],
+  providers: [UploadFileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
