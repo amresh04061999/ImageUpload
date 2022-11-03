@@ -2,49 +2,65 @@
   <h1 class="text-center my-4">Image-upload-form</h1>
   <div class="row d-flex justify-content-center align-items-center ">
     <div class="col-md-6  col-lg-6  d-flex flex-column   ">
-      <div>
-        <input type="file" accept=".jpg,.png" class="button"  (change)="selectFile($event)" />
-        <p>Upload Percent: {{percentDone}}% </p> <br />
-        
-        <ng-container *ngIf="uploadSuccess" class="success">
-          <p class="sucess">Upload Successful</p>
-        </ng-container> 
-      </div>
+
       <form [formGroup]="images">
         <!-- Browser file 1 -->
         <div class="file">
           <label class="form-label" for="number">Select First Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath1">
-          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName"
+            [ngClass]="{'is-invalid' : validdation['imageName'].invalid && (submitted || validdation['imageName'].touched || validdation['imageName'].dirty),
+                    'is-valid' : validdation['imageName'].valid && (submitted || validdation['imageName'].touched || validdation['imageName'].dirty)}">
+          <div
+            *ngIf="validdation['imageName'].invalid && (submitted|| validdation['imageName'].touched || validdation['imageName'].dirty)"
+            class="danger">
+            <div *ngIf="validdation['imageName'].errors?.['required']" class="text-danger">
+              Name is required.
+            </div>
+          </div>
+          <div [innerHtml]='msg' *ngIf=" msg" class="text-danger">
+          </div>
+          <div><img [src]="base64String" width="100" class="mt-2">
+            <div *ngIf="currentFile" class="progress">
+              <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                [ngStyle]="{ width: progress + '%' }">
+                {{ progress }}%
+              </div>
+            </div>
+          </div>
+          <div>
+          </div>
+
         </div>
         <!-- Browser file 2 -->
         <div class="file">
           <label class="form-label" for="number">Select Second Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath2">
+          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName2">
           <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+          <div><img [src]="" width="100" class="mt-2"></div>
         </div>
         <!-- Browser file 3 -->
         <div class="file">
           <label class="form-label" for="number">Select third Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath3">
+          <input type="file" (change)="selectFile($event)" class="file form-control">
           <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+          <div><img [src]="" width="100" class="mt-2"></div>
         </div>
         <!-- Browser file 4 -->
         <div class="file">
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath4">
+          <input type="file" (change)="selectFile($event)" class="file form-control">
           <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+          <div><img [src]="" width="100" class="mt-2"></div>
         </div>
         <!-- Browser file 5 -->
         <div class="file">
           <label class="form-label" for="number">Select Five Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imagepath5">
+          <input type="file" (change)="selectFile($event)" class="file form-control">
           <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="imageFile" width="100" class="mt-2"></div>
+          <div><img [src]="" width="100" class="mt-2"></div>
         </div>
+        <!-- <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()"></button> -->
+        <button type="button" class="btn btn-success">Next</button>
       </form>
     </div>
   </div>

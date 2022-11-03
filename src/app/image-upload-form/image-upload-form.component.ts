@@ -1,7 +1,8 @@
+import { animate } from '@angular/animations';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpService } from '../Services/http.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UploadFileService } from '../Services/upload-file.service';
 
 @Component({
   selector: 'app-image-upload-form',
@@ -9,73 +10,65 @@ import { HttpService } from '../Services/http.service';
   styleUrls: ['./image-upload-form.component.scss']
 })
 export class ImageUploadFormComponent implements OnInit {
-  percentDone: number;
-  uploadSuccess: boolean;
-
+  public currentFile: any;
+  public progress = 0;
+  public message = '';
   // image form Formgroup
   public images: FormGroup
-  imageFile: any
+  public submitted = false;
+  public base64String: any
+  public imageFile!: File
   public msg: string
-  constructor(private fb: FormBuilder,
-    private httpServices:HttpService) {
-    this.msg = ''
-    this.percentDone=0
-    this.uploadSuccess=false
 
+  constructor(private fb: FormBuilder,
+    private uploadService: UploadFileService,) {
+    this.msg = ''
+    this.base64String = ''
     // formbuilder
     this.images = this.fb.group({
-      imagepath1:(''),
-      imagename1: ('')
+      imageName: ['', [Validators.required]],
+      imageName2: ['', [Validators.required]],
+      imagepath1: [''],
     })
+    // disable next file
+    this.images.get('imageName2')?.disable()
   }
 
   ngOnInit(): void {
   }
-
-  
-
-  uploadImageAndProgress() {
-    this.images.controls['imagepath1'].setValue(this.imageFile),
-    this.images.controls['imagename1'].setValue(this.imageFile.name),
-    this.httpServices.addimage(this.images.value)
-      .subscribe((event:any) => {
+  /**
+   * upload data json server
+   */
+  upload(): void {
+    this.progress = 0;
+    this.images.controls['imagepath1'].setValue(this.base64String);
+    this.currentFile = this.imageFile;
+    this.uploadService.upload(this.images.value).subscribe(
+      (event: any) => {
         if (event.type === HttpEventType.UploadProgress) {
-          this.percentDone = Math.round((100 * event.loaded) / event.total);
-        } else if (event instanceof HttpResponse) {
-          this.uploadSuccess = true;
+          this.progress = Math.round(100 * event.loaded / event.total);
+        } else {
+          if (this.progress == 100) {
+            if (this.images.controls['imageName'].valid) {
+              this.images.get('imageName2')?.enable()
+
+            }
+          }
+
         }
-      });
+      },);
+
   }
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
      * Function for company logo uploading
      * @param event
      */
   selectFile(event: any) {
+    setTimeout(() => {
+      this.upload()
+    }, 2000);
     /**
-     * 
+     *
      *show message validation
      */
     let mimeType = event.target.files[0].type;
@@ -83,17 +76,23 @@ export class ImageUploadFormComponent implements OnInit {
       this.msg = "Only images are supported";
       return;
     }
-    if (event.target.files.length > 0) {
-      this.imageFile = event.target.files[0];
-    }
-    /**
-     * image priview
-     */
-    let reader = new FileReader();
-    reader.readAsDataURL(this.imageFile);
-    reader.onload = () => {
-      this.imageFile = String(reader.result)
-    }
+    setTimeout(() => {
+      if (event.target.files.length > 0) {
+        this.imageFile = event.target.files[0];
+      }
+      /**
+       * image priview
+       */
+      let reader = new FileReader();
+      reader.readAsDataURL(this.imageFile);
+      reader.onload = () => {
+        this.base64String = reader.result
+        console.log(this.base64String)
+      }
+    }, 1000);
   }
-
+  // select data employe form
+  get validdation(): { [key: string]: AbstractControl } {
+    return this.images.controls;
+  }
 }
