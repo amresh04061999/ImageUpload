@@ -32,7 +32,11 @@ export class FileUploadComponent implements OnInit {
     //     { labelid: 5, labelname: 'dexpth', value: 5 },
     //   ]
     this.form = this.fb.group({
-      imagepath1: ['']
+      imagepath1: [''],
+      imagepath2: [''],
+      imagepath3: [''],
+      imagepath4: [''],
+      imagepath5: ['']
 
     })
     // this.form = this.createGroup(this.imagedata)
