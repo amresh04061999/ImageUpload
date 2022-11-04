@@ -10,7 +10,7 @@ import { CoreModule } from './core/core.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadFileService } from './Services/upload-file.service';
-import { FilUploadComponent } from './fil-upload/fil-upload.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 
 
@@ -18,7 +18,7 @@ import { FilUploadComponent } from './fil-upload/fil-upload.component';
   declarations: [
     AppComponent,
     ImageUploadFormComponent,
-    FilUploadComponent,
+    FileUploadComponent,
 
   ],
   imports: [

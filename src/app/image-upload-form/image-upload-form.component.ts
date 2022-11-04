@@ -16,15 +16,15 @@ import { UploadFileService } from '../Services/upload-file.service';
 export class ImageUploadFormComponent implements OnInit {
   public currentFile: any;
   public currentFile1: any;
-  public progress:number;
-  public progress1:number;
-  public message:string;
-  public message1 :string;
+  public progress: number;
+  public progress1: number;
+  public message: string;
+  public message1: string;
   // image form Formgroup
   public images: FormGroup;
   public submitted = false;
-  public base64String: any; 
-  public base64String1: any; 
+  public base64String: any;
+  public base64String1: any;
   public imageFile!: File;
   public msg: string;
   constructor(
@@ -33,10 +33,10 @@ export class ImageUploadFormComponent implements OnInit {
   ) {
     this.msg = '';
     this.base64String = '';
-    this.progress=0;
-    this.progress1=0;
-    this.message='';
-    this.message1='';
+    this.progress = 0;
+    this.progress1 = 0;
+    this.message = '';
+    this.message1 = '';
 
     // formbuilder
     this.images = this.fb.group({
@@ -54,10 +54,10 @@ export class ImageUploadFormComponent implements OnInit {
     this.images.get('imageName4')?.disable();
     this.images.get('imageName5')?.disable();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   /**
-   * upload data json server 
+   * upload data json server
    */
   upload(): void {
     this.progress = 0;
@@ -80,7 +80,7 @@ export class ImageUploadFormComponent implements OnInit {
   /**
    * file upload second json server
    */
-  public upload2():void{
+  public upload2(): void {
     this.progress = 0;
     this.images.controls['imagepath2'].setValue(this.base64String1);
     this.currentFile1 = this.imageFile;
@@ -96,7 +96,7 @@ export class ImageUploadFormComponent implements OnInit {
           }
         }
       }
-      
+
     });
   }
   /**
@@ -132,9 +132,9 @@ export class ImageUploadFormComponent implements OnInit {
     }, 2000);
   }
 
- /***
-  * file select second
-  */
+  /***
+   * file select second
+   */
   public selectFile1(event: any) {
     /**
      *
