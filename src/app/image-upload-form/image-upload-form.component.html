@@ -2,12 +2,11 @@
   <h1 class="text-center my-4">Image-upload-form</h1>
   <div class="row d-flex justify-content-center align-items-center ">
     <div class="col-md-6  col-lg-6  d-flex flex-column   ">
-
       <form [formGroup]="images">
         <!-- Browser file 1 -->
         <div class="file">
           <label class="form-label" for="number">Select First Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName"
+          <input type="file" (change)="selectFile($event,1)" class="file form-control"  formControlName="imageName"
             [ngClass]="{'is-invalid' : validdation['imageName'].invalid && (submitted || validdation['imageName'].touched || validdation['imageName'].dirty),
                     'is-valid' : validdation['imageName'].valid && (submitted || validdation['imageName'].touched || validdation['imageName'].dirty)}">
           <div
@@ -17,17 +16,7 @@
               image is required.
             </div>
           </div>
-          <div [innerHtml]='msg' *ngIf=" msg" class="text-danger">
-          </div>
-          <div class="d-flex  justify-content-center align-items-center">
-            <img [src]="base64String" width="100" class="mt-2 ">
-            <div *ngIf="currentFile" class="progress w-100 mx-4">
-              <div class="progress-bar  progress-bar-striped" role="progressbar" attr.aria-valuenow="{{ progress }}"
-                aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
-                {{ progress }}%
-              </div>
-            </div>
-          </div>
+        
           <div class=" d-flex justify-content-center">
             <h6 *ngIf="message">{{message}}</h6>
           </div>
@@ -35,7 +24,7 @@
         <!-- Browser file 2 -->
         <div class="file">
           <label class="form-label" for="number">Select Second Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile1($event)" class="file form-control" formControlName="imageName2"
+          <input type="file" [disabled]="images.valid" (change)="selectFile($event,2)" class="file form-control" formControlName="imageName2"
             [ngClass]="{'is-invalid' : validdation['imageName2'].invalid && (submitted || validdation['imageName2'].touched || validdation['imageName2'].dirty),
           'is-valid' : validdation['imageName2'].valid && (submitted || validdation['imageName2'].touched || validdation['imageName2'].dirty)}">
           <div
@@ -45,46 +34,66 @@
               image is required.
             </div>
           </div>
-          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="" width="100" class="mt-2"></div>
-          <div class="d-flex  justify-content-center align-items-center">
-            <img [src]="base64String1" width="100" class="mt-2 ">
-            <div *ngIf="currentFile1" class="progress w-100 mx-4">
-              <div class="progress-bar  progress-bar-striped" role="progressbar" attr.aria-valuenow="{{ progress1 }}"
-                aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress1 + '%' }">
-                {{ progress1 }}%
-              </div>
-            </div>
-          </div>
           <div class=" d-flex justify-content-center">
             <h6 *ngIf="message1">{{message1}}</h6>
           </div>
         </div>
         <!-- Browser file 3 -->
         <div class="file">
-          <label class="form-label" for="number">Select third Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName3">
-          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="" width="100" class="mt-2"></div>
+          <label class="form-label" for="number">Select Third Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event,2)" class="file form-control" formControlName="imageName3"
+            [ngClass]="{'is-invalid' : validdation['imageName3'].invalid && (submitted || validdation['imageName3'].touched || validdation['imageName3'].dirty),
+          'is-valid' : validdation['imageName3'].valid && (submitted || validdation['imageName3'].touched || validdation['imageName3'].dirty)}">
+          <div
+            *ngIf="validdation['imageName3'].invalid && (submitted|| validdation['imageName3'].touched || validdation['imageName3'].dirty)"
+            class="danger">
+            <div *ngIf="validdation['imageName3'].errors?.['required']" class="text-danger">
+              image is required.
+            </div>
+          </div>
+          
+          <div class=" d-flex justify-content-center">
+            <h6 *ngIf="message2">{{message2}}</h6>
+          </div>
         </div>
+      
         <!-- Browser file 4 -->
         <div class="file">
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName4">
-          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="" width="100" class="mt-2"></div>
-        </div>
+          <label class="form-label" for="number">Select Second Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event,2)" class="file form-control" formControlName="imageName4"
+            [ngClass]="{'is-invalid' : validdation['imageName4'].invalid && (submitted || validdation['imageName4'].touched || validdation['imageName4'].dirty),
+          'is-valid' : validdation['imageName4'].valid && (submitted || validdation['imageName4'].touched || validdation['imageName4'].dirty)}">
+          <div
+            *ngIf="validdation['imageName4'].invalid && (submitted|| validdation['imageName4'].touched || validdation['imageName4'].dirty)"
+            class="danger">
+            <div *ngIf="validdation['imageName4'].errors?.['required']" class="text-danger">
+              image is required.
+            </div>
+          </div>
+          <div class=" d-flex justify-content-center">
+            <h6 *ngIf="message3">{{message3}}</h6>
+          </div>
         <!-- Browser file 5 -->
         <div class="file">
-          <label class="form-label" for="number">Select Five Image <span class="text-danger">*</span></label>
-          <input type="file" (change)="selectFile($event)" class="file form-control" formControlName="imageName5">
-          <div [innerHtml]='msg' *ngIf="msg" class="text-danger"></div>
-          <div><img [src]="" width="100" class="mt-2"></div>
+          <label class="form-label" for="number">Select Second Image <span class="text-danger">*</span></label>
+          <input type="file" (change)="selectFile($event,2)" class="file form-control" formControlName="imageName5"
+            [ngClass]="{'is-invalid' : validdation['imageName5'].invalid && (submitted || validdation['imageName5'].touched || validdation['imageName5'].dirty),
+          'is-valid' : validdation['imageName5'].valid && (submitted || validdation['imageName5'].touched || validdation['imageName5'].dirty)}">
+          <div
+            *ngIf="validdation['imageName5'].invalid && (submitted|| validdation['imageName5'].touched || validdation['imageName5'].dirty)"
+            class="danger">
+            <div *ngIf="validdation['imageName5'].errors?.['required']" class="text-danger">
+              image is required.
+            </div>
+          </div>
+          <div class=" d-flex justify-content-center">
+            <h6 *ngIf="message4">{{message4}}</h6>
+          </div>
+        </div>
         </div>
         <div class="d-flex justify-content-end">
-          <button type=" button" class="btn btn-success ">Next</button>
+          <button type=" button" class="btn btn-success " [disabled]="images.invalid">Next</button>
         </div>
-        <!-- <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()"></button> -->
-
       </form>
     </div>
   </div>

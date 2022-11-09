@@ -20,6 +20,9 @@ export class ImageUploadFormComponent implements OnInit {
   public progress1: number;
   public message: string;
   public message1: string;
+  public message2: string;
+  public message3: string;
+  public message4: string;
   // image form Formgroup
   public images: FormGroup;
   public submitted = false;
@@ -37,6 +40,9 @@ export class ImageUploadFormComponent implements OnInit {
     this.progress1 = 0;
     this.message = '';
     this.message1 = '';
+    this.message2 = '';
+    this.message3 = '';
+    this.message4 = '';
 
     // formbuilder
     this.images = this.fb.group({
@@ -47,6 +53,9 @@ export class ImageUploadFormComponent implements OnInit {
       imageName5: ['', [Validators.required]],
       imagepath1: [''],
       imagepath2: [''],
+      imagepath3: [''],
+      imagepath4: [''],
+      imagepath5: [''],
     });
     // disable  four file
     this.images.get('imageName2')?.disable();
@@ -72,51 +81,35 @@ export class ImageUploadFormComponent implements OnInit {
           if (this.images.controls['imageName'].valid) {
             this.images.get('imageName2')?.enable();
             this.message = 'Successfully Uploaded file';
+            if (this.images.controls['imageName2'].valid) {
+              this.images.get('imageName3')?.enable();
+              this.message1 = 'Successfully Uploaded file';
+            }
+            if (this.images.controls['imageName3'].valid) {
+              this.images.get('imageName4')?.enable();
+              this.message2 = 'Successfully Uploaded file';
+            }
+           if (this.images.controls['imageName4'].valid) {
+              this.images.get('imageName5')?.enable();
+              this.message3 = 'Successfully Uploaded file';
+            }
+             if (this.images.controls['imageName5'].valid) {
+              this.message3 = 'Successfully Uploaded file';
+            }
           }
+          
         }
       }
     });
   }
-  /**
-   * file upload second json server
-   */
-  public upload2(): void {
-    this.progress = 0;
-    this.images.controls['imagepath2'].setValue(this.base64String1);
-    this.currentFile1 = this.imageFile;
-    this.uploadService.upload(this.images.value).subscribe((event: any) => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress1 = Math.round((100 * event.loaded) / event.total);
-      } else {
-        if (this.progress1 == 100) {
-          //  this.progress = 0;
-          if (this.images.controls['imageName2'].valid) {
-            this.images.get('imageName3')?.enable();
-            this.message1 = 'Successfully Uploaded file';
-          }
-        }
-      }
-
-    });
-  }
+  
+  
   /**
    * Function for company logo uploading
    * @param event
    */
-  public selectFile(event: any) {
-    /**
-     *
-     *show message validation
-     */
-    let mimeType = event.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.msg = 'Only images are supported';
-      return;
-    }
-    setTimeout(() => {
-      if (event.target.files.length > 0) {
-        this.imageFile = event.target.files[0];
-      }
+  public selectFile(event: any,data:any) {
+     this.imageFile = event.target.files[0];
       /**
        * image priview
        */
@@ -125,45 +118,34 @@ export class ImageUploadFormComponent implements OnInit {
       reader.onload = () => {
         this.base64String = reader.result;
       };
-    }, 1000);
-
-    setTimeout(() => {
-      this.upload();
-    }, 2000);
-  }
-
-  /***
-   * file select second
-   */
-  public selectFile1(event: any) {
-    /**
-     *
-     *show message validation
-     */
-    let mimeType = event.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.msg = 'Only images are supported';
-      return;
-    }
-    setTimeout(() => {
-      if (event.target.files.length > 0) {
-        this.imageFile = event.target.files[0];
+      if(data==1){
+        setTimeout(() => {
+          this.upload();
+        }, 2000);
       }
-      /**
-       * image priview
-       */
-      let reader = new FileReader();
-      reader.readAsDataURL(this.imageFile);
-      reader.onload = () => {
-        this.base64String1 = reader.result;
-      };
-    }, 1000);
-
-    setTimeout(() => {
-      this.upload2()
-    }, 2000);
+      if(data==2){
+        setTimeout(() => {
+          this.upload();
+        }, 2000);
+      }
+      if(data==3){
+        setTimeout(() => {
+          this.upload();
+        }, 2000);
+      }
+      if(data==4){
+        setTimeout(() => {
+          this.upload();
+        }, 2000);
+      }
+      if(data==5){
+        setTimeout(() => {
+          this.upload();
+        }, 2000);
+      }
+    
   }
-  // select data employe form
+  // form validation
   get validdation(): { [key: string]: AbstractControl } {
     return this.images.controls;
   }
